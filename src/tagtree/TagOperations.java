@@ -60,7 +60,8 @@ public class TagOperations
         tempSubstring = tempSubstring.substring(0,newTagPos);
         HtmlTagData parent = tagList.pop();
         HtmlTagData newData = new HtmlTagData(tempSubstring, parent);
-        parent.children.add(newData);
+        newData.setSubstring(true);
+        parent.addChild(newData);
         System.out.println("Substring Added for " + parent.htmlTag);
         tagList.push(parent);
         return newTagPos-1;
@@ -102,7 +103,7 @@ public class TagOperations
         {
             HtmlTagData parent = tagList.pop();
             HtmlTagData newChild = new HtmlTagData(tag,parent);
-            parent.children.add(newChild);
+            parent.addChild(newChild);
             System.out.println("Child added for " + parent.htmlTag);
             tagList.push(parent);
             tagList.push(newChild);

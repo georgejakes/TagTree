@@ -19,15 +19,27 @@ class HtmlTagData {
     String htmlTag;
     HtmlTagData parent = null;
     List<HtmlTagData> children = new ArrayList<>();
+    Boolean substr;
     
     public HtmlTagData(String htmlTag, HtmlTagData parent) {
         this.htmlTag = htmlTag;
         this.parent = parent;
+        this.substr = false;
     }
     
     public void addChild(HtmlTagData child)
     {
         this.children.add(child);
+    }
+    
+    public void setSubstring(Boolean value)
+    {
+        this.substr = value;
+    }
+    
+    public Boolean isSubstring()
+    {
+        return this.substr;
     }
 }
 
@@ -57,14 +69,14 @@ public class TagTree {
             else
             {
                 //Skipping the rest of the text, till next tag
-                i+= TagOperations.recognizeSubstring(htmlInput,i,tagList);
+                i += TagOperations.recognizeSubstring(htmlInput,i,tagList);
             }
         }
-        System.out.println(root.children.get(0).children.size());
+        System.out.println(root);
         //System.out.println(tagList.size());
         if(tagList.size() > 1)
         {
-            System.out.println("Error");
+            System.out.println("Error in HTML");
         }
         else
         {
