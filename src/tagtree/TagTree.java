@@ -71,9 +71,7 @@ public class TagTree {
                 //Skipping the rest of the text, till next tag
                 i += TagOperations.recognizeSubstring(htmlInput,i,tagList);
             }
-        }
-        System.out.println(root);
-        //System.out.println(tagList.size());
+        }     
         if(tagList.size() > 1)
         {
             System.out.println("Error in HTML");

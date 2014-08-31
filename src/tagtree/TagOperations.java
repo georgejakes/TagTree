@@ -17,7 +17,8 @@ import java.util.Stack;
  * For operations on html tags 
  */
 public class TagOperations
-{  
+{   //List of empty tags
+    static String[] emptyTags = {"br","input","!DOCTYPE"};
  /**
  * Recognizes the corresponding tag as opening/closing and acts accordingly 
  * @param htmlData  HTML data string input
@@ -38,6 +39,14 @@ public class TagOperations
         {
             //System.out.println("Tag opened");
             String tag = identifyTag(htmlData, i);
+            for(int j=0;j<emptyTags.length;j++)
+            {
+                if(emptyTags[j].equals(tag))
+                {
+                    addEmptyTag (htmlData, i, tagList, tag);
+                    return "Empty tag found";
+                }
+            }
             addOpenTag (htmlData, i, tagList,tag);
             return ("Tag opened");
         }
@@ -62,7 +71,7 @@ public class TagOperations
         HtmlTagData newData = new HtmlTagData(tempSubstring, parent);
         newData.setSubstring(true);
         parent.addChild(newData);
-        System.out.println("Substring Added for " + parent.htmlTag);
+        System.out.println("Child substring Added for " + parent.htmlTag);
         tagList.push(parent);
         return newTagPos-1;
     }
@@ -104,7 +113,7 @@ public class TagOperations
             HtmlTagData parent = tagList.pop();
             HtmlTagData newChild = new HtmlTagData(tag,parent);
             parent.addChild(newChild);
-            System.out.println("Child added for " + parent.htmlTag);
+            System.out.println("Child " + newChild.htmlTag +" tag added for " + parent.htmlTag);
             tagList.push(parent);
             tagList.push(newChild);
         }
@@ -118,6 +127,24 @@ public class TagOperations
     }
     
     /**
+     * Adding Empty tags
+     * @param htmlData
+     * @param i
+     * @param tagList
+     * @param tag
+     * @return 
+     */
+    public static Boolean addEmptyTag (String htmlData, int i, Stack<HtmlTagData> tagList, String tag)
+    {
+        HtmlTagData parent = tagList.pop();
+        HtmlTagData newChild = new HtmlTagData(tag,parent);
+        parent.addChild(newChild);
+        tagList.push(parent);
+        System.out.println("Child Empty "+ tag +" Tag Added for " + parent.htmlTag);
+        return true;
+    }
+    
+    /**
      * Identifies the tag within < ... > 
      * @param htmlData  HTML string input
      * @param i         Offset for evaluation to commence
@@ -126,7 +153,17 @@ public class TagOperations
     public static String identifyTag(String htmlData, int i)
     {
         String tempString = htmlData.substring(i);
-        int indexOfClose = tempString.indexOf(">");
+        int lessThanTag = tempString.indexOf(">");
+        int space = tempString.indexOf(" ");
+        int indexOfClose;
+        if(lessThanTag < space || space == -1)
+        {
+            indexOfClose = lessThanTag;
+        }
+        else
+        {
+            indexOfClose = space;
+        }
         if(indexOfClose != -1)
         {
             return tempString.substring(1,indexOfClose); 
