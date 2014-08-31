@@ -40,6 +40,7 @@ public class TagTree {
         // TODO code application logic here
         Scanner input = new Scanner(System.in);
         String htmlInput = input.nextLine();
+        System.out.println("Input: " + htmlInput);
         HtmlTagData root = new HtmlTagData("root",null);
         Stack<HtmlTagData> tagList = new Stack();
         tagList.push(root);
