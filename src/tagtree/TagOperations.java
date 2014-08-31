@@ -10,7 +10,7 @@ import java.util.Stack;
 
 /**
  *
- * @author user
+ * @author George Jacob
  */
 
 /**
@@ -18,7 +18,7 @@ import java.util.Stack;
  */
 public class TagOperations
 {   //List of empty tags
-    static String[] emptyTags = {"br","input","!DOCTYPE"};
+    static String[] emptyTags = {"br","input","!DOCTYPE","link","hr","img"};
  /**
  * Recognizes the corresponding tag as opening/closing and acts accordingly 
  * @param htmlData  HTML data string input
@@ -41,7 +41,7 @@ public class TagOperations
             String tag = identifyTag(htmlData, i);
             for(int j=0;j<emptyTags.length;j++)
             {
-                if(emptyTags[j].equals(tag))
+                if(emptyTags[j].toLowerCase().equals(tag.toLowerCase()))
                 {
                     addEmptyTag (htmlData, i, tagList, tag);
                     return "Empty tag found";
