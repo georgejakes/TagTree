@@ -50,11 +50,12 @@ public class TagTree {
                 String tag = TagOperations.recognizeTags(htmlInput,i,tagList);
                 String tempString = htmlInput.substring(i);
                 int skip = tempString.indexOf(">");
+                //Skipping the tag text
                 i += skip;
-                //System.out.println(tag);
             }
             else
             {
+                //Skipping the rest of the text, till next tag
                 i+= TagOperations.recognizeSubstring(htmlInput,i,tagList);
             }
         }

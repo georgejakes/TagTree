@@ -17,7 +17,14 @@ import java.util.Stack;
  * For operations on html tags 
  */
 public class TagOperations
-{
+{  
+ /**
+ * Recognizes the corresponding tag as opening/closing and acts accordingly 
+ * @param htmlData  HTML data string input
+ * @param i         Position from which evaluation should start
+ * @param tagList   Stack of tags
+ * @return          Confirmation of tag open/closed
+ */
     public static String recognizeTags(String htmlData, int i, Stack<HtmlTagData> tagList)
     {
         if(htmlData.charAt(i) == '<' && htmlData.charAt(i+1) == '/')
@@ -39,7 +46,13 @@ public class TagOperations
             return null;
         }
     }
-    
+    /**
+     * Recognizes string of text
+     * @param htmlData  HTML data string input
+     * @param i         Position from which evaluation should start
+     * @param tagList   Stack of tags
+     * @return 
+     */
     public static int recognizeSubstring(String htmlData, int i, Stack<HtmlTagData> tagList)
     {
         String tempSubstring = htmlData.substring(i);
@@ -52,7 +65,14 @@ public class TagOperations
         tagList.push(parent);
         return newTagPos-1;
     }
-    
+    /**
+     * Closes a tag, pops it from the tag stack
+     * @param htmlData  Html data string
+     * @param i         Offset for evaluation to commence
+     * @param tagList   Stack of tags
+     * @param tag       Tag being closed
+     * @return          true if operation successful
+     */
     public static Boolean addCloseTag(String htmlData, int i, Stack<HtmlTagData> tagList,String tag)
     {   
         HtmlTagData currentTag = tagList.peek();
@@ -68,7 +88,14 @@ public class TagOperations
             return false;
         }
     }
-    
+    /**
+     * Adds a new tag to the tag stack
+     * @param htmlData  HTML data string
+     * @param i         Offset for evaluation to commence
+     * @param tagList   List of tags
+     * @param tag       Tag being opened
+     * @return          
+     */
     public static Boolean addOpenTag (String htmlData, int i, Stack<HtmlTagData> tagList,String tag)
     {
         if(tagList.size() != 0)
@@ -89,6 +116,12 @@ public class TagOperations
         return true;
     }
     
+    /**
+     * Identifies the tag within < ... > 
+     * @param htmlData  HTML string input
+     * @param i         Offset for evaluation to commence
+     * @return          Tag within < > 
+     */
     public static String identifyTag(String htmlData, int i)
     {
         String tempString = htmlData.substring(i);
